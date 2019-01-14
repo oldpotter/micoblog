@@ -5,7 +5,7 @@
 # @Link    : https://shenkeling.top
 # @Version : $Id$
 
-from app import db, app
+from app import db
 from flask import render_template, flash, redirect, url_for, request
 from app.auth.forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required

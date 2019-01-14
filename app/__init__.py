@@ -12,23 +12,29 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 
+db = SQLAlchemy()  # ORM
+migrate = Migrate()  # 数据库迁移
+login = LoginManager()  # 登录
+bootstrap = Bootstrap()  # bootstrap库
 
-app = Flask(__name__)
-app.config.from_object(Config) #导入配置信息
-db = SQLAlchemy(app) # ORM
-migrate = Migrate(app, db) # 数据库迁移
-login = LoginManager(app)# 登录
-login.login_view = 'auth.login'
-bootstrap = Bootstrap(app)#bootstrap库
 
-from errors import bp as errors_bp
-app.register_blueprint(errors_bp)
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)  # 导入配置信息
+    db.init_app(app)
+    migrate.init_app(app, db)
+    login.init_app(app)
+    login.login_view = 'auth.login'
+    bootstrap.init_app(app)
 
-from auth import bp as auth_bp
-app.register_blueprint(auth_bp)
+    from errors import bp as errors_bp
+    app.register_blueprint(errors_bp)
 
-from main import bp as main_bp
-app.register_blueprint(main_bp)
+    from auth import bp as auth_bp
+    app.register_blueprint(auth_bp)
 
-from . import models
-from app.auth import routes
+    from main import bp as main_bp
+    app.register_blueprint(main_bp)
+
+    return app
+

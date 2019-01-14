@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-from flask import flash, redirect, url_for, request, render_template
+from flask import flash, redirect, url_for, request, render_template, current_app
 from flask_login import login_required, current_user
-from app import app
 from app.main import bp
 from app.main.forms import PostForm, EditProfileForm
 from app.models import Post, User
@@ -22,7 +21,7 @@ def index():
         flash(u'发布成功')
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
-    pagination = current_user.following_post().paginate(page, app.config['POSTS_PER_PAGE'], False)
+    pagination = current_user.following_post().paginate(page, current_app.config['POSTS_PER_PAGE'], False)
     # next_url = url_for('index', page=posts.next_num) if posts.has_next else None
     # prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
     return render_template('index.html', title=u'主页', posts=pagination.items, form=form, pagination=pagination)
@@ -41,7 +40,7 @@ def user(username):
     '''
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
-    pagination = user.posts.paginate(page, app.config['POSTS_PER_PAGE'], False)
+    pagination = user.posts.paginate(page, current_app.config['POSTS_PER_PAGE'], False)
     # next_url = url_for('user', page=posts.next_num, username=username) if posts.has_next else None
     # prev_url = url_for('user', page=posts.prev_num, username=username) if posts.has_prev else None
     return render_template('user.html', user=user, posts=pagination.items, pagination=pagination)
@@ -104,7 +103,7 @@ def unfollow(username):
 @login_required
 def explore():
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
+    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
     # next_url = url_for('explore', page=posts.next_num) if posts.has_next else None
     # prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
     return render_template('index.html', title=u'发现', posts=pagination.items, pagination=pagination)

@@ -5,4 +5,5 @@
 # @Link    : https://shenkeling.top
 # @Version : $Id$
 
-from app import app
+from app import create_app
+app = create_app()
