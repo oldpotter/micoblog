@@ -118,4 +118,5 @@ dmypy.json
 config.py
 
 # pycharm文件
-.idea/
+.DS_Store
+.idea
