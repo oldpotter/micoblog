@@ -16,14 +16,14 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="navbar-nav mr-auto">
-            {{ render_nav_item('index', '主页') }}
+            {{ render_nav_item('main.index', '主页') }}
             {% if current_user.is_anonymous %}
-                {{ render_nav_item('login', '登录') }}
+                {{ render_nav_item('auth.login', '登录') }}
             {% else %}
-                {{ render_nav_item('user', '个人主页', username=current_user.username) }}
-                {{ render_nav_item('logout', '注销') }}
+                {{ render_nav_item('main.user', '个人主页', username=current_user.username) }}
+                {{ render_nav_item('auth.logout', '注销') }}
             {% endif %}
-            {{ render_nav_item('explore', '发现') }}
+            {{ render_nav_item('main.explore', '发现') }}
         </div>
     </nav>
     {% with messages = get_flashed_messages() %}

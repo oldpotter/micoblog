@@ -18,7 +18,17 @@ app.config.from_object(Config) #导入配置信息
 db = SQLAlchemy(app) # ORM
 migrate = Migrate(app, db) # 数据库迁移
 login = LoginManager(app)# 登录
-login.login_view = 'login'
+login.login_view = 'auth.login'
 bootstrap = Bootstrap(app)#bootstrap库
 
-from . import routes, models, errors
+from errors import bp as errors_bp
+app.register_blueprint(errors_bp)
+
+from auth import bp as auth_bp
+app.register_blueprint(auth_bp)
+
+from main import bp as main_bp
+app.register_blueprint(main_bp)
+
+from . import models
+from app.auth import routes

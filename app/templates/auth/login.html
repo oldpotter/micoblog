@@ -2,6 +2,7 @@
 {% from 'bootstrap/form.html' import render_form %}
 
 {% block content %}
-    <h1>编辑个人资料</h1>
+    <h1>登录</h1>
     {{ render_form(form) }}
+    <p>没有账号？点击<a href="{{ url_for('auth.register') }}">注册</a></p>
 {% endblock %}
