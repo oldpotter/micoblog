@@ -36,10 +36,10 @@ def index():
     #     }
     # ]
     page = request.args.get('page', 1, type=int)
-    posts = current_user.following_post().paginate(page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('index', page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
-    return render_template('index.html', title=u'主页', posts=posts.items, form=form, next_url=next_url, prev_url=prev_url)
+    pagination = current_user.following_post().paginate(page, app.config['POSTS_PER_PAGE'], False)
+    # next_url = url_for('index', page=posts.next_num) if posts.has_next else None
+    # prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
+    return render_template('index.html', title=u'主页', posts=pagination.items, form=form, pagination=pagination)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -92,10 +92,10 @@ def user(username):
     '''
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
-    posts = user.posts.paginate(page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('user', page=posts.next_num, username=username) if posts.has_next else None
-    prev_url = url_for('user', page=posts.prev_num, username=username) if posts.has_prev else None
-    return render_template('user.html', user=user, posts=posts.items, next_url=next_url, prev_url=prev_url)
+    pagination = user.posts.paginate(page, app.config['POSTS_PER_PAGE'], False)
+    # next_url = url_for('user', page=posts.next_num, username=username) if posts.has_next else None
+    # prev_url = url_for('user', page=posts.prev_num, username=username) if posts.has_prev else None
+    return render_template('user.html', user=user, posts=pagination.items, pagination=pagination)
 
 
 @app.route('/edit_profile', methods=('GET', 'POST'))
@@ -155,9 +155,9 @@ def unfollow(username):
 @login_required
 def explore():
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.timestamp.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('explore', page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
-    return render_template('index.html', title=u'发现', posts=posts.items, next_url=next_url, prev_url=prev_url)
+    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
+    # next_url = url_for('explore', page=posts.next_num) if posts.has_next else None
+    # prev_url = url_for('explore', page=posts.prev_num) if posts.has_prev else None
+    return render_template('index.html', title=u'发现', posts=pagination.items, pagination=pagination)
 
 
