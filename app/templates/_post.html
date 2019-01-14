@@ -1,0 +1,9 @@
+<table>
+    <tr>
+        <td><img src="{{ current_user.avatar() }}" style="width: 60px; height: 60px"></td>
+        <td>作者:
+            <a href="{{ url_for('user', username=post.author.username) }}">{{ post.author.username }}</a>的动态：<br>
+            {{ post.body }}
+        </td>
+    </tr>
+</table>
