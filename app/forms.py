@@ -12,34 +12,34 @@ from app.models import User
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('记住我')
-    submit = SubmitField('登录')
+    username = StringField(u'用户名', validators=[DataRequired()])
+    password = PasswordField(u'密码', validators=[DataRequired()])
+    remember_me = BooleanField(u'记住我')
+    submit = SubmitField(u'登录')
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('用户名', validators=[DataRequired()])
-    email = StringField('电子邮箱', validators=[DataRequired(), Email()])
-    password = PasswordField('密码', validators=[DataRequired()])
-    password_again = PasswordField('重复密码', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('注册用户')
+    username = StringField(u'用户名', validators=[DataRequired()])
+    email = StringField(u'电子邮箱', validators=[DataRequired(), Email()])
+    password = PasswordField(u'密码', validators=[DataRequired()])
+    password_again = PasswordField(u'重复密码', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField(u'注册用户')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError('用户名已存在')
+            raise ValidationError(u'用户名已存在')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('电子邮件已经存在')
+            raise ValidationError(u'电子邮件已经存在')
 
 
 class EditProfileForm(FlaskForm):
-    username = StringField('用户名', validators=[DataRequired()])
-    about_me = TextAreaField('关于我', validators=[Length(min=0, max=140)])
-    submit = SubmitField('更新')
+    username = StringField(u'用户名', validators=[DataRequired()])
+    about_me = TextAreaField(u'关于我', validators=[Length(min=0, max=140)])
+    submit = SubmitField(u'更新')
 
     def __init__(self, original_username, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
@@ -49,9 +49,9 @@ class EditProfileForm(FlaskForm):
         if self.original_username != username.data:
             user = User.query.filter_by(username=username.data).first()
             if user is not None:
-                raise ValidationError('用户名已经存在')
+                raise ValidationError(u'用户名已经存在')
 
 
 class PostForm(FlaskForm):
-    post = TextAreaField('说点什么吧', validators=[DataRequired(), Length(min=1, max=140)])
-    submit = SubmitField('提交')
+    post = TextAreaField(u'说点什么吧', validators=[DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField(u'提交')

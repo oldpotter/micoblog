@@ -17,15 +17,15 @@ class UserModelCase(unittest.TestCase):
         db.drop_all()
 
     def test_password_hash(self):
-        u = User(username='老波特')
+        u = User(username=u'老波特')
         u.set_password('1234')
         self.assertFalse(u.check_password('4321'))
         self.assertTrue(u.check_password('1234'))
 
 
     def test_follow(self):
-        u1 = User(username='张三', email='zs@example.com')
-        u2 = User(username='李四', email='lisi@example.com')
+        u1 = User(username=u'张三', email='zs@example.com')
+        u2 = User(username=u'李四', email='lisi@example.com')
         db.session.add(u1)
         db.session.add(u2)
         db.session.commit()
@@ -36,9 +36,9 @@ class UserModelCase(unittest.TestCase):
         db.session.commit()
         self.assertTrue(u1.is_following(u2))
         self.assertEqual(u1.following.count(), 1)
-        self.assertEqual(u1.following.first().username, '李四')
+        self.assertEqual(u1.following.first().username, u'李四')
         self.assertEqual(u2.follower.count(), 1)
-        self.assertEqual(u2.follower.first().username, '张三')
+        self.assertEqual(u2.follower.first().username, u'张三')
 
         u1.unfollow(u2)
         db.session.commit()
@@ -49,18 +49,18 @@ class UserModelCase(unittest.TestCase):
 
     def test_following_post(self):
         # 创建用户
-        u1 = User(username='铜钱草1', email='t1@qq.com')
-        u2 = User(username='铜钱草2', email='t2@qq.com')
-        u3 = User(username='铜钱草3', email='t3@qq.com')
-        u4 = User(username='铜钱草4', email='t4@qq.com')
+        u1 = User(username=u'铜钱草1', email='t1@qq.com')
+        u2 = User(username=u'铜钱草2', email='t2@qq.com')
+        u3 = User(username=u'铜钱草3', email='t3@qq.com')
+        u4 = User(username=u'铜钱草4', email='t4@qq.com')
         db.session.add_all([u1, u2, u3, u4])
 
         # 创建文章
         now = datetime.utcnow()
-        p1 = Post(body='文章11111', author=u1, timestamp=now + timedelta(1))
-        p2 = Post(body='文章22222', author=u2, timestamp=now + timedelta(2))
-        p3 = Post(body='文章33333', author=u3, timestamp=now + timedelta(3))
-        p4 = Post(body='文章44444', author=u4, timestamp=now + timedelta(4))
+        p1 = Post(body=u'文章11111', author=u1, timestamp=now + timedelta(1))
+        p2 = Post(body=u'文章22222', author=u2, timestamp=now + timedelta(2))
+        p3 = Post(body=u'文章33333', author=u3, timestamp=now + timedelta(3))
+        p4 = Post(body=u'文章44444', author=u4, timestamp=now + timedelta(4))
         db.session.add_all([p1, p2, p3, p4])
         db.session.commit()
 

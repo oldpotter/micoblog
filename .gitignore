@@ -115,3 +115,7 @@ dmypy.json
 .pyre/
 
 # 配置文件
+config.py
+
+# pycharm文件
+.idea/
