@@ -114,9 +114,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# 配置文件
-config.py
-
 # pycharm文件
 .DS_Store
 .idea
