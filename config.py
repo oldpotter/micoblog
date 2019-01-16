@@ -6,8 +6,10 @@
 # @Version : $Id$
 
 import os
+from dotenv import load_dotenv
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+env_file_path = os.path.join(os.getcwd(), '.env')
+load_dotenv(env_file_path)
 
 class Config(object):
 	SECRET_KEY = os.environ.get('SECRET_KEY') or '1234qwer'
